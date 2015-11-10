@@ -144,3 +144,5 @@ highlight ColorColumn ctermbg=grey
 
 au BufRead,BufNewFile *.conf set filetype=yaml
 
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+

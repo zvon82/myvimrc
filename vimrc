@@ -9,9 +9,16 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" colorschemes:
 Plugin 'wombat256.vim'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'morhetz/gruvbox'
+Plugin 'altercation/vim-colors-solarized'
+
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'klen/python-mode'
@@ -33,7 +40,11 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-colorscheme wombat256mod
+" colorscheme wombat256mod
+colorscheme hybrid
+" let g:solarized_termcolors=256
+set background=dark
+" colorscheme solarized
 set hlsearch
 set incsearch
 set number

@@ -1,0 +1,21 @@
+[user]
+        email = alb82@yandex-team.ru
+        name = Albin Razuvaev
+[diff]
+    # tool = mycmp
+	tool = vimdiff
+[color]
+        ui = true
+[alias]
+        gol1 = log --graph --oneline --decorate
+        gol = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+        gola1 = log --graph --oneline --decorate --all
+        gola = log --graph --all --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+        #lg = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
+	d = difftool
+[difftool]
+	prompt = false
+[merge]
+	conflictstyle = diff3
+[difftool "mycmp"]
+	cmd = env python /home/alb82/workspace/git_targeting/bsmr-scripts/test_pt/cmp_tables.py -d FORMAT --local $LOCAL $REMOTE

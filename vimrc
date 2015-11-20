@@ -19,6 +19,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
+Plugin 'tommcdo/vim-exchange'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'klen/python-mode'
@@ -78,8 +79,20 @@ nnoremap <leader><space> :noh<cr>
 set formatoptions=qrn1
 " set colorcolumn=85
 
+lang mes en
+set encoding=utf-8
+set fileformat=unix
 set list
 set listchars=tab:▸\ ,trail:·
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 12
+  elseif has("gui_macvim")
+    set guifont=Menlo\ Regular:h14
+  elseif has("gui_win32")
+    set guifont=Consolas:h10:cANSI
+  endif
+endif
 
 nnoremap j gj
 nnoremap k gk

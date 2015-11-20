@@ -93,6 +93,8 @@ if has("gui_running")
     set guifont=Consolas:h11:cANSI
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
+    set guioptions-=m
+    set guioptions-=T
   endif
 endif
 

@@ -79,7 +79,6 @@ nnoremap <leader><space> :noh<cr>
 set formatoptions=qrn1
 " set colorcolumn=85
 
-lang mes en
 set encoding=utf-8
 set fileformat=unix
 set list
@@ -90,6 +89,7 @@ if has("gui_running")
   elseif has("gui_macvim")
     set guifont=Menlo\ Regular:h14
   elseif has("gui_win32")
+    lang mes en
     set guifont=Consolas:h11:cANSI
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim

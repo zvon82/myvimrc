@@ -101,6 +101,8 @@ endif
 nnoremap j gj
 nnoremap k gk
 inoremap jj <ESC>
+inoremap жж <ESC>
+inoremap ;; <ESC>
 
 set mouse=a
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>

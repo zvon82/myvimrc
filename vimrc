@@ -25,6 +25,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'klen/python-mode'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'scrooloose/nerdcommenter'
 
 
 " All of your Plugins must be added before the following line

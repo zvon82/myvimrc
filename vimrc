@@ -26,6 +26,7 @@ Plugin 'klen/python-mode'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'sessionman.vim'
 
 
 " All of your Plugins must be added before the following line
@@ -123,6 +124,9 @@ autocmd! bufwritepost .vimrc source %
 set pastetoggle=<F2>
 " set clipboard=unnamed
 " set bs=2
+" nnoremap <F1> :NERDTreeToggle<cr>
+nnoremap <c-b> :CtrlPBuffer<cr>
+" nnoremap <F2> :TagbarToggle<cr>
 "
 " Quicksave command
 noremap <C-z> :update<CR>
@@ -176,4 +180,9 @@ highlight ColorColumn ctermbg=grey
 au BufRead,BufNewFile *.conf set filetype=yaml
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+
+let g:pymode_rope = 0
+let g:pymode_rope_vim_completion = 0
+let g:pymode_virtualenv = 1
+let g:pymode_lint_write = 0
 

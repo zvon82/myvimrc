@@ -179,7 +179,12 @@ highlight ColorColumn ctermbg=grey
 
 au BufRead,BufNewFile *.conf set filetype=yaml
 
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+" not working set langmap=ж\;,Ж\:,б\,,Б\<,ю\.,Ю\>,э\',Э\",х\[,Х\{,ъ\],Ъ\}
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=NONE guibg=Cyan
 
 let g:pymode_rope = 0
 let g:pymode_rope_vim_completion = 0

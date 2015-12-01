@@ -102,8 +102,6 @@ endif
 
 nnoremap j gj
 nnoremap k gk
-inoremap jj <ESC>
-inoremap жж <ESC>
 inoremap ;; <ESC>
 
 set mouse=a

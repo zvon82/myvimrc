@@ -1,0 +1,18 @@
+snippet my "my first python snippet" b
+${1:hello}, $1
+endsnippet
+
+snippet mrdomap "mr_do_map" b
+mr_do_map([
+		${1:Map('''
+			''',
+			add_fields=(
+				!!('a', str),
+			)
+		),}
+		${2:Cut(keys=[!!], format_id=True),}
+	],
+	src_tables=${3:!!},
+	dst_tables=${4:!!},
+)
+endsnippet

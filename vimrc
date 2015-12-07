@@ -28,6 +28,9 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'sessionman.vim'
 
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -190,3 +193,9 @@ let g:pymode_rope_vim_completion = 0
 let g:pymode_virtualenv = 1
 let g:pymode_lint_write = 0
 
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"

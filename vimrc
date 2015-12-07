@@ -128,7 +128,7 @@ nnoremap <c-b> :CtrlPBuffer<cr>
 " nnoremap <F2> :TagbarToggle<cr>
 "
 " Quicksave command
-noremap <C-z> :update<CR>
+noremap <leader>s :update<CR>
 " voremap <C-z> :update<CR>
 " ioremap <C-z> :update<CR>
 "
@@ -147,7 +147,7 @@ nnoremap <C-h> <C-w>h
 " map <leader>m <esc>:tabnext<cr>
 
 " map sort function to a key
-vnoremap <leader>s :sort<cr>
+"vnoremap <leader>s :sort<cr>
 
 " easier moving f code blocks
 vnoremap < <gv  " better indentation

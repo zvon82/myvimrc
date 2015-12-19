@@ -22,7 +22,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'klen/python-mode'
+"Plugin 'klen/python-mode'
+Plugin 'scrooloose/syntastic'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
@@ -112,8 +113,8 @@ set mouse=a
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 nnoremap <silent> <leader>h :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
-nnoremap <leader><S-k> 0xx<Esc>
-nnoremap <leader>k 0i#<space><Esc>
+"nnoremap <leader><S-k> 0xx<Esc>
+"nnoremap <leader>k 0i#<space><Esc>
 
 
 " github.com/mbrochh
@@ -188,10 +189,10 @@ set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
 
-let g:pymode_rope = 0
-let g:pymode_rope_vim_completion = 0
-let g:pymode_virtualenv = 1
-let g:pymode_lint_write = 0
+"let g:pymode_rope = 0
+"let g:pymode_rope_vim_completion = 0
+"let g:pymode_virtualenv = 1
+"let g:pymode_lint_write = 0
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -199,3 +200,14 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0

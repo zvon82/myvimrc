@@ -22,8 +22,9 @@ Plugin 'tpope/vim-surround'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'klen/python-mode'
+Plugin 'klen/python-mode'
 Plugin 'scrooloose/syntastic'
+Plugin 'Konfekt/FastFold'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
@@ -189,10 +190,17 @@ set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
 
-"let g:pymode_rope = 0
-"let g:pymode_rope_vim_completion = 0
-"let g:pymode_virtualenv = 1
-"let g:pymode_lint_write = 0
+
+" Pymode
+let g:pymode_rope = 0
+let g:pymode_rope_vim_completion = 0
+let g:pymode_virtualenv = 1
+let g:pymode_lint = 0
+let g:pymode_lint_write = 0
+let g:pymode_run = 0
+let g:pymode_syntax = 1
+let g:pymode_syntax_slow_sync = 0
+
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -211,3 +219,8 @@ let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+
+" FastFold
+let g:python_fold = 1
+

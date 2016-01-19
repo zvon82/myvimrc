@@ -16,3 +16,43 @@ mr_do_map([
 	dst_tables=${4:!!},
 )
 endsnippet
+
+
+snippet newscript "new python script" b
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+'''
+'''
+
+import sys
+
+import yabs.conf
+from yabs.logger import info
+from yabs.tabtools import (
+    mr_do_map,
+    StatAggregator,
+    Mapper, Grep, Cut
+)
+from yabs.tabutils import (
+    TemporaryTableWithMeta, read_ts_table)
+from yabs.mapreduce.common import run_action, build_hour_log
+from calc_tools.logs import get_period_suffix
+from calc_tools.argparse import get_ap_argparser
+from yabs.threadpool import ThreadManager
+
+
+if __name__ == '__main__':
+    argparser = get_ap_argparser(
+        achoices=(
+        )
+    )
+    argparser.add_argument(
+        '-e',
+        help='',
+    )
+    args, global_conf = argparser.parse_args()
+
+    if 'copy_0' in args.actions:
+        copy_0()
+
+endsnippet

@@ -31,6 +31,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'sessionman.vim'
 
 Plugin 'jceb/vim-orgmode'
+Plugin 'vim-scripts/utl.vim'
 
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'

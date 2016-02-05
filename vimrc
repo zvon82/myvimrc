@@ -30,6 +30,8 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'sessionman.vim'
 
+Plugin 'jceb/vim-orgmode'
+
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 " Plugin 'honza/vim-snippets'

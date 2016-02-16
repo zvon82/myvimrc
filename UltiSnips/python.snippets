@@ -43,6 +43,20 @@ mr_do_aggregate(
 endsnippet
 
 
+snippet mrdojoin "mr_do_join" b
+mr_do_join(
+	Join(
+		${1:!!left},
+		${2:!!right},
+		keys=[${3:!!}],
+		joinType=!!'full outer',
+	),
+	postmap=[${5:!!}],
+	dst_tables=${4:[!!]},
+)
+endsnippet
+
+
 snippet newscript "new python script" b
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-

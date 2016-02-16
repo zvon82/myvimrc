@@ -2,6 +2,7 @@ snippet my "my first python snippet" b
 ${1:hello}, $1
 endsnippet
 
+
 snippet mrdomap "mr_do_map" b
 mr_do_map([
 		${1:Map('''
@@ -12,8 +13,32 @@ mr_do_map([
 		),}
 		${2:Cut(keys=[!!], format_id=True),}
 	],
-	src_tables=${3:!!},
-	dst_tables=${4:!!},
+	src_tables=${3:[!!]},
+	dst_tables=${4:[!!]},
+)
+endsnippet
+
+
+snippet mrdoreduce "mr_do_reduce" b
+mr_do_reduce(
+	${1:Reducer(Sum())},
+	postmap=[${4:!!}],
+	src_tables=${2:[!!]},
+	dst_tables=${3:[!!]},
+)
+endsnippet
+
+
+snippet mrdoaggr "mr_do_aggregate" b
+mr_do_aggregate(
+	StatAggregator([
+			Sum(),
+		],
+		keys=[${1:!!}],
+	),
+	premap=[${4:!!}],
+	src_tables=${2:[!!]},
+	dst_tables=${3:[!!]},
 )
 endsnippet
 

@@ -119,3 +119,20 @@ class !!(BasicMapper):
         self._output_format.del_field(!!)
 
 endsnippet
+
+
+snippet basicreducer "class inheriting from BasicReducer" b
+class !!(BasicReducer):
+
+    def __init__(self, delay_threshold, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+    def __call__(self, key, records):
+        for record in records:
+            yield record
+
+    def setFormat(self, format):
+        super(self.__class__, self).setFormat(format, rememberValue=True)
+        self._output_format.addField('repeated_hits', int)
+
+endsnippet

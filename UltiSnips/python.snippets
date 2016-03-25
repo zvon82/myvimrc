@@ -95,3 +95,27 @@ if __name__ == '__main__':
         copy_0()
 
 endsnippet
+
+
+snippet basicmapper "class inheriting from BasicMapper" b
+class !!(BasicMapper):
+    def __init__(self):
+        super(!!, self).__init__()
+
+    def __call__(self, records):
+        !!for r in records:
+            field = getattr(r, self._field_name)
+            assert type(field) is str
+            new_fields = field.split(self._split_by)
+            new_records = [r.__copy__() for i in range(len(new_fields)-1)] + [r]
+            for rec, f in izip(new_records, new_fields):
+                setattr(rec, self._field_name, f)
+                yield rec
+
+    def setFormat(self, format):
+        self._format = format.clone()
+        self._output_format = format.clone()
+        self._output_format.addField(!!, int)
+        self._output_format.del_field(!!)
+
+endsnippet

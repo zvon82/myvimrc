@@ -1,6 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" Remove ALL autocommands for the current group.
+"autocmd! подсветка не работает после
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -184,7 +187,9 @@ highlight ColorColumn ctermbg=grey
 " python-mode
 " python_editing
 
-au BufRead,BufNewFile *.conf set filetype=yaml
+
+autocmd BufRead,BufNewFile *.conf set filetype=yaml
+autocmd FileType org let maplocalleader = "\\"
 
 " set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 " not working set langmap=ж\;,Ж\:,б\,,Б\<,ю\.,Ю\>,э\',Э\",х\[,Х\{,ъ\],Ъ\}
@@ -220,8 +225,12 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = {
+    \ "mode": "passive",
+    \ "active_filetypes": [],
+    \ "passive_filetypes": [] }
 
 
 " FastFold

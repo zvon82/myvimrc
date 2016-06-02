@@ -208,6 +208,7 @@ let g:pymode_lint_write = 0
 let g:pymode_run = 0
 let g:pymode_syntax = 1
 let g:pymode_syntax_slow_sync = 0
+set completeopt-=preview
 
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.

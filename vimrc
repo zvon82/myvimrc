@@ -25,6 +25,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'kien/ctrlp.vim'
 "Plugin 'JazzCore/ctrlp-cmatcher' Control-T matcher
+"https://github.com/JazzCore/ctrlp-cmatcher
 Plugin 'scrooloose/nerdtree'
 Plugin 'klen/python-mode'
 Plugin 'scrooloose/syntastic'

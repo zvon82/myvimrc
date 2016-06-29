@@ -5,9 +5,10 @@ endsnippet
 
 snippet mapper "Mapper" b
 Mapper('''
+	${1}
 	''',
 	add_fields=(
-		('!!', int),
+		('${2:!!}', int),
 	)
 ),
 endsnippet
@@ -32,9 +33,9 @@ endsnippet
 snippet mrdoreduce "mr_do_reduce" b
 mr_do_reduce(
 	${1:Reducer(Sum())},
-	postmap=[${4:!!}],
-	src_tables=${2:[!!]},
-	dst_tables=${3:[!!]},
+	postmap=[${2:!!}],
+	src_tables=${3:[!!]},
+	dst_tables=${4:[!!]},
 )
 endsnippet
 
@@ -46,9 +47,9 @@ mr_do_aggregate(
 		],
 		keys=[${1:!!}],
 	),
-	premap=[${4:!!}],
-	src_tables=${2:[!!]},
-	dst_tables=${3:[!!]},
+	premap=[${2:!!}],
+	src_tables=${3:[!!]},
+	dst_tables=${4:[!!]},
 )
 endsnippet
 
@@ -77,15 +78,17 @@ import sys
 
 import yabs.conf
 from yabs.logger import info
+from yabs.logconfig import get_logs_regexp_time
 from yabs.tabtools import (
-    mr_do_map,
+    mr_do_map, mr_do_aggregate, mr_do_reduce,
     StatAggregator,
+    Sum, Count, Max, Min,
     Mapper, Grep, Cut
 )
 from yabs.tabutils import (
     TemporaryTableWithMeta, read_ts_table)
 from yabs.mapreduce.common import run_action, build_hour_log
-from calc_tools.logs import get_period_suffix
+from calc_tools.logs import get_period_suffix, get_tablesd
 from calc_tools.argparse import get_ap_argparser
 from yabs.threadpool import ThreadManager
 
@@ -108,9 +111,9 @@ endsnippet
 
 
 snippet basicmapper "class inheriting from BasicMapper" b
-class !!(BasicMapper):
+class ${1:!!}(BasicMapper):
     def __init__(self):
-        super(!!, self).__init__()
+        super($1, self).__init__()
 
     def __call__(self, records):
         !!for r in records:
@@ -132,17 +135,17 @@ endsnippet
 
 
 snippet basicreducer "class inheriting from BasicReducer" b
-class !!(BasicReducer):
+class ${1:!!}(BasicReducer):
 
     def __init__(self, delay_threshold, *args, **kwargs):
-        super(self.__class__, self).__init__(*args, **kwargs)
+        super($1, self).__init__(*args, **kwargs)
 
     def __call__(self, key, records):
         for record in records:
             yield record
 
     def setFormat(self, format):
-        super(self.__class__, self).setFormat(format, rememberValue=True)
+        super($1, self).setFormat(format, rememberValue=True)
         self._output_format.addField('repeated_hits', int)
 
 endsnippet

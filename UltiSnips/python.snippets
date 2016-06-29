@@ -3,6 +3,16 @@ ${1:hello}, $1
 endsnippet
 
 
+snippet mapper "Mapper" b
+Mapper('''
+	''',
+	add_fields=(
+		('!!', int),
+	)
+),
+endsnippet
+
+
 snippet mrdomap "mr_do_map" b
 mr_do_map([
 		${1:Mapper('''

@@ -93,6 +93,16 @@ from calc_tools.argparse import get_ap_argparser
 from yabs.threadpool import ThreadManager
 
 
+def !!(args):
+    srcs = [el['name'] for el in get_tablesd(args, '!!efv')]
+    thread_man = ThreadManager()
+    for src in srcs:
+        thread_man.addJob(!!, src)
+    thread_man.startWorkers()
+    thread_man.waitWorkers()
+    thread_man.stopWorkers()
+
+
 if __name__ == '__main__':
     argparser = get_ap_argparser(
         achoices=(
@@ -107,6 +117,17 @@ if __name__ == '__main__':
     if 'copy_0' in args.actions:
         copy_0()
 
+endsnippet
+
+
+snippet tm "ThreadManager usage" b
+tm = ThreadManager()
+for ${1:src in srcs}:
+    thread_man.addJob(${2:!!}, ${3:src})
+tm.startWorkers()
+tm.waitWorkers()
+tm.stopWorkers()
+$0
 endsnippet
 
 

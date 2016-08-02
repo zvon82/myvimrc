@@ -22,6 +22,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'kien/ctrlp.vim'
 "Plugin 'JazzCore/ctrlp-cmatcher' Control-T matcher
@@ -138,6 +139,7 @@ set pastetoggle=<F2>
 " set bs=2
 " nnoremap <F1> :NERDTreeToggle<cr>
 nnoremap <c-b> :CtrlPBuffer<cr>
+"let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 " nnoremap <F2> :TagbarToggle<cr>
 "
 " Quicksave command
@@ -234,8 +236,11 @@ let g:syntastic_mode_map = {
     \ "mode": "passive",
     \ "active_filetypes": [],
     \ "passive_filetypes": [] }
+let g:syntastic_python_pylint_post_args="--max-line-length=100"
 
 
 " FastFold
 let g:python_fold = 1
 
+" Jedi
+let g:jedi#show_call_signatures = "2"

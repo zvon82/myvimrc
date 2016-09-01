@@ -140,6 +140,7 @@ set pastetoggle=<F2>
 " nnoremap <F1> :NERDTreeToggle<cr>
 nnoremap <c-b> :CtrlPBuffer<cr>
 "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+"let g:ctrlp_max_files=0
 " nnoremap <F2> :TagbarToggle<cr>
 "
 " Quicksave command

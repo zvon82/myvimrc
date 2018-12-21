@@ -3,11 +3,11 @@ from datetime import datetime
 endglobal
 
 
-snippet today "%d.%m.%Y" b
-`!p snip.rv = datetime.today().strftime('%d.%m.%Y')`
+snippet today "%Y.%m.%d" b
+`!p snip.rv = datetime.today().strftime('%Y.%m.%d')`
 endsnippet
 
 
-snippet now "%d.%m.%Y %H:%M:%S" b
-`!p snip.rv = datetime.today().strftime('%d.%m.%Y %H:%M:%S')`
+snippet now "%Y.%m.%d %H:%M:%S" b
+`!p snip.rv = datetime.today().strftime('%Y.%m.%d %H:%M:%S')`
 endsnippet

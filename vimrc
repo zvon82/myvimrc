@@ -246,3 +246,5 @@ let g:python_fold = 1
 
 " Jedi
 let g:jedi#show_call_signatures = "2"
+" disable <leader>s overwriting
+let g:jedi#goto_stubs_command = ""

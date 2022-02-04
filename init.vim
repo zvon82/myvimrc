@@ -236,4 +236,7 @@ lua << EOF
           lualine_c = {{'filename', path=1}},
       },
     }
+
+    require("which-key").setup {}
+
 EOF

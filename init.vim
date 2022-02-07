@@ -75,6 +75,8 @@ Plug 'hrsh7th/vim-vsnip'
 
 Plug 'terrortylor/nvim-comment'
 
+Plug 'folke/which-key.nvim'
+
 call plug#end()
 
 

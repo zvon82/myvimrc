@@ -105,6 +105,7 @@ noremap <leader>4 <cmd>lua require("harpoon.ui").nav_file(4)<cr>
 noremap <leader>5 <cmd>lua require("harpoon.ui").nav_file(5)<cr>
 
 " Find files using Telescope command-line sugar.
+nnoremap <leader>rr <cmd>Telescope resume<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk", "logos", "yabs"}})<cr>
 nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk", "logos", "yabs"}})<cr>
@@ -133,12 +134,23 @@ lua << EOF
       -- For plugins with an `on_attach` callback, call them here. For example:
       -- require('completion').on_attach()
     end
+
+    -- Setup lspconfig.
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     require('lspconfig').pylsp.setup{
         on_attach = custom_lsp_attach,
         capabilities = capabilities,
+        settings = {
+            pylsp = {
+                plugins = {
+                    pycodestyle = {
+                        ignore = {'E501'} -- E501: line too long
+                    }
+                }
+            }
+        }
     }
-    
+
     require'lualine'.setup()
 
     require('telescope').setup{
@@ -214,13 +226,6 @@ lua << EOF
       { name = 'cmdline' }
     })
   })
-
-  -- Setup lspconfig.
-  -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-  --   capabilities = capabilities
-  -- }
 
     require('nvim_comment').setup{}
     -- gc{motion} - to comment/uncomment

@@ -5,7 +5,7 @@ set expandtab
 set smartindent
 set autoindent
 
-set hlsearch
+" set hlsearch on by default and not helps with v:hlsearch at all
 set incsearch
 set number
 set relativenumber
@@ -88,8 +88,7 @@ highlight Normal guibg=none
 let mapleader = " "
 
 " highlight under cursor
-nnoremap <leader>h <cmd>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>
-  " :set hls<cr>
+nnoremap <leader>h <cmd>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
 " leader write and close
 noremap <leader>e <cmd>close<cr>

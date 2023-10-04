@@ -44,7 +44,7 @@ set completeopt=menu,menuone,noselect " from nvim-cmp
 call plug#begin('~/.local/share/nvim/site/plugged')
 " colorscheme:
 Plug 'w0ng/vim-hybrid'
-Plug 'gruvbox-community/gruvbox'
+Plug 'ellisonleao/gruvbox.nvim'
 
 " ThePrimeagen
 Plug 'nvim-lua/popup.nvim'
@@ -77,11 +77,17 @@ Plug 'terrortylor/nvim-comment'
 
 Plug 'folke/which-key.nvim'
 
+Plug 'Eandrju/cellular-automaton.nvim'
+
+Plug 'kylechui/nvim-surround'
+
+Plug 'ggandor/leap.nvim'
+
+Plug 'sotte/presenting.vim'
+
 call plug#end()
 
 
-" colorscheme hybrid
-colorscheme gruvbox
 highlight Normal guibg=none
 
 
@@ -109,16 +115,17 @@ noremap <leader>pw <cmd>lua vim.diagnostic.goto_prev()<cr>
 
 " Find files using Telescope command-line sugar.
 nnoremap <leader>rr <cmd>Telescope resume<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk", "logos", "yabs"}})<cr>
-nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk", "logos", "yabs"}})<cr>
-nnoremap <leader>fk <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads/bigkv"}})<cr>
-nnoremap <leader>gd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk", "logos", "yabs"}})<cr>
-nnoremap <leader>ffile <cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<cr>
-nnoremap <leader>fr <cmd>Telescope live_grep<cr>
+" nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk/alb82", "logos", "yabs", "sandbox/projects", "contrib/python", "yt/python/yt/wrapper"}})<cr>
+nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>gd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>f/ <cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<cr>
+" nnoremap <leader>fr <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fh <cmd>Telescope harpoon marks<cr>
+" nnoremap <leader>fhe <cmd>Telescope help_tags<cr>
 nnoremap <leader>fdir <cmd>Telescope file_browser<cr>
 nnoremap <leader>fdef <cmd>lua require("telescope.builtin").lsp_definitions()<cr>
 
@@ -151,7 +158,11 @@ lua << EOF
                     }
                 }
             }
-        }
+        },
+        flags = {
+            allow_incremental_sync = false,
+            debounce_text_changes = 500,
+        },
     }
 
     require'lualine'.setup()
@@ -162,7 +173,7 @@ lua << EOF
           prompt_prefix = ' > ',
           color_devicons = true,
 
-          file_ignore_patterns = { "^search/", },
+          file_ignore_patterns = { "^search/", "/cache", "ads/pytorch/packages" },
           -- vimgrep_arguments = {
               -- "rg",
               -- "--color=never",
@@ -181,6 +192,7 @@ lua << EOF
       }
     }
     require('telescope').load_extension('fzy_native')
+    require("telescope").load_extension('harpoon')
 
 
 -- Setup nvim-cmp.
@@ -254,5 +266,18 @@ lua << EOF
   }
 
   require("which-key").setup {}
+
+  require("nvim-surround").setup({})
+
+  require("leap").add_default_mappings()
+
+  require("gruvbox").setup({
+      contrast = "soft", -- can be "hard", "soft" or empty string
+      palette_overrides = {},
+      overrides = {},
+      dim_inactive = true,
+      transparent_mode = false,
+  })
+  vim.cmd("colorscheme gruvbox")
 
 EOF

@@ -61,7 +61,7 @@ Plug 'mbbill/undotree'
 
 Plug 'nvim-lualine/lualine.nvim'
 " If you want to have icons in your statusline choose one of these
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 
 " nvim-cmp
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -279,5 +279,9 @@ lua << EOF
       transparent_mode = false,
   })
   vim.cmd("colorscheme gruvbox")
+
+  vim.filetype.add({
+    filename = { ["ya.make"] = "yamake" }
+  })
 
 EOF

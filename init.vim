@@ -45,6 +45,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 " colorscheme:
 Plug 'w0ng/vim-hybrid'
 Plug 'ellisonleao/gruvbox.nvim'
+Plug 'folke/tokyonight.nvim'
 
 " ThePrimeagen
 Plug 'nvim-lua/popup.nvim'
@@ -119,6 +120,9 @@ nnoremap <leader>rr <cmd>Telescope resume<cr>
 nnoremap <leader>ff <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk/alb82", "logos", "yabs", "sandbox/projects", "contrib/python", "yt/python/yt/wrapper"}})<cr>
 nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
 nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>gyt <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yt/python/yt/wrapper"}})<cr>
+nnoremap <leader>gyq <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yql/library"}})<cr>
+nnoremap <leader>grec <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"library/python/reactor/client"}})<cr>
 nnoremap <leader>gd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
 nnoremap <leader>f/ <cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<cr>
 " nnoremap <leader>fr <cmd>Telescope live_grep<cr>
@@ -128,6 +132,7 @@ nnoremap <leader>fh <cmd>Telescope harpoon marks<cr>
 " nnoremap <leader>fhe <cmd>Telescope help_tags<cr>
 nnoremap <leader>fdir <cmd>Telescope file_browser<cr>
 nnoremap <leader>fdef <cmd>lua require("telescope.builtin").lsp_definitions()<cr>
+
 
 " lsp
 lua << EOF
@@ -278,10 +283,11 @@ lua << EOF
       dim_inactive = true,
       transparent_mode = false,
   })
-  vim.cmd("colorscheme gruvbox")
+  --vim.cmd("colorscheme gruvbox")
+  vim.cmd("colorscheme tokyonight")
 
   vim.filetype.add({
     filename = { ["ya.make"] = "yamake" }
-  })
+  }) -- use with ~/.config/nvim/syntax/yamake.vim from arcadia
 
 EOF

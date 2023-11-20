@@ -228,7 +228,13 @@ lua << EOF
       { name = 'vsnip' }, -- For vsnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
     }, {
-      { name = 'buffer' },
+      { name = 'buffer',
+        option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end
+        }
+      },
     })
   })
 
@@ -276,7 +282,8 @@ lua << EOF
 
   require("leap").add_default_mappings()
 
-  require("gruvbox").setup({
+  --require("gruvbox").setup({
+  require("tokyonight").setup({
       contrast = "soft", -- can be "hard", "soft" or empty string
       palette_overrides = {},
       overrides = {},

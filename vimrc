@@ -82,7 +82,7 @@ set cursorline
 set ttyfast
 set laststatus=2
 
-let mapleader = ","
+let mapleader = " "
 
 set ignorecase
 set smartcase

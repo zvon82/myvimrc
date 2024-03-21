@@ -126,6 +126,7 @@ nnoremap <leader>gyt <cmd>lua require("telescope.builtin").grep_string({["search
 nnoremap <leader>gyq <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yql/library"}})<cr>
 nnoremap <leader>grec <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"library/python/reactor/client"}})<cr>
 nnoremap <leader>gt2 <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/utils/learn-tasks2"}})<cr>
+nnoremap <leader>gl <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads/libs", "junk/alb82", "logos/libs"}})<cr>
 nnoremap <leader>gd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
 nnoremap <leader>f/ <cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<cr>
 " nnoremap <leader>fr <cmd>Telescope live_grep<cr>
@@ -181,7 +182,12 @@ lua << EOF
           prompt_prefix = ' > ',
           color_devicons = true,
 
-          file_ignore_patterns = { "^search/", "/cache", "ads/pytorch/packages" },
+          file_ignore_patterns = {
+              "^search/", "/cache", "ads/pytorch/packages",
+              "/canondata", "/factor_check",
+              "logos/projects/ms",
+              "node_modules", "difacto/sources", "static/dist",
+          },
           -- vimgrep_arguments = {
               -- "rg",
               -- "--color=never",

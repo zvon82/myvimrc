@@ -61,6 +61,10 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'mbbill/undotree'
 
 Plug 'nvim-lualine/lualine.nvim'
+" to add arc branches my patch to 
+" ~/.local/share/nvim/site/plugged/lualine.nvim:
+" https://paste.yandex-team.ru/d592e8dc-d3c9-42df-b1e5-d5059084f594/text
+
 " If you want to have icons in your statusline choose one of these
 Plug 'nvim-tree/nvim-web-devicons'
 

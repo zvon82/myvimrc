@@ -117,17 +117,30 @@ noremap <leader>pw <cmd>lua vim.diagnostic.goto_prev()<cr>
 " Find files using Telescope command-line sugar.
 nnoremap <leader>rr <cmd>Telescope resume<cr>
 " nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>ff <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk/alb82", "logos", "yabs", "sandbox/projects", "contrib/python", "yt/python/yt/wrapper"}})<cr>
-nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
-nnoremap <leader>fg <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
-nnoremap <leader>flo <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"logos/projects"}})<cr>
-nnoremap <leader>ftt <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads/libs/py_mapreduce"}})<cr>
-nnoremap <leader>gyt <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yt/python/yt"}})<cr>
-nnoremap <leader>gyq <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yql/library"}})<cr>
-nnoremap <leader>grec <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"library/python/reactor/client"}})<cr>
-nnoremap <leader>gt2 <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/utils/learn-tasks2"}})<cr>
-nnoremap <leader>gl <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads/libs", "junk/alb82", "logos/libs"}})<cr>
-nnoremap <leader>gd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>ff <cmd>lua require("telescope.builtin").find_files(
+  \ {["search_dirs"] = {
+  \     "ads", "junk/alb82", "logos", "yabs", "sandbox/projects",
+  \     "contrib/python", "yt/python/yt/wrapper", "yabs/models_services/feature_store" 
+  \ }})<cr>
+nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files(
+  \ {["search_dirs"] = {
+  \     "ads", "junk/alb82", "logos",  "yabs/models_services/feature_store"
+  \ }})<cr>
+nnoremap <leader>fla <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"logos/projects"}})<cr>
+nnoremap <leader>la <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>llo <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"logos/projects"}})<cr>
+nnoremap <leader>ltt <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads/libs/py_mapreduce"}})<cr>
+nnoremap <leader>dyt <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yt/python/yt"}})<cr>
+nnoremap <leader>dyq <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yql/library"}})<cr>
+nnoremap <leader>drec <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"library/python/reactor/client"}})<cr>
+nnoremap <leader>dt2 <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/utils/learn-tasks2"}})<cr>
+nnoremap <leader>dl <cmd>lua require("telescope.builtin").grep_string(
+  \ {["search_dirs"] = {
+  \     "ads/libs", "ads/ml_engine", "junk/alb82", "logos/libs", "logos/projects/ads", "ads/daily_duty" 
+  \ }})<cr>
+nnoremap <leader>dem <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads/emily", "junk/alb82", "ads/libs"}})<cr>
+nnoremap <leader>dd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
+nnoremap <leader>dfs <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/models_services/feature_store", "yql/udfs/yabs/feature_store"}})<cr>
 nnoremap <leader>f/ <cmd>lua require("telescope.builtin").current_buffer_fuzzy_find()<cr>
 " nnoremap <leader>fr <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>

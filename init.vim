@@ -46,6 +46,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 Plug 'w0ng/vim-hybrid'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'folke/tokyonight.nvim'
+Plug 'rebelot/kanagawa.nvim'
 
 " ThePrimeagen
 Plug 'nvim-lua/popup.nvim'
@@ -63,7 +64,8 @@ Plug 'mbbill/undotree'
 Plug 'nvim-lualine/lualine.nvim'
 " to add arc branches my patch to 
 " ~/.local/share/nvim/site/plugged/lualine.nvim:
-" https://paste.yandex-team.ru/d592e8dc-d3c9-42df-b1e5-d5059084f594/text
+" wget --header 'Authorization: OAuth ..' https://paste.yandex-team.ru/d592e8dc-d3c9-42df-b1e5-d5059084f594/text
+" patch -p1 < text
 
 " If you want to have icons in your statusline choose one of these
 Plug 'nvim-tree/nvim-web-devicons'
@@ -131,6 +133,7 @@ nnoremap <leader>fa <cmd>lua require("telescope.builtin").find_files(
   \     "ads", "junk/alb82", "logos",  "yabs/models_services/feature_store"
   \ }})<cr>
 nnoremap <leader>fla <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"logos/projects"}})<cr>
+nnoremap <leader>fy <cmd>lua require("telescope.builtin").find_files({["search_dirs"]={"yabs/server/proto", "yabs/server/libs", "yabs/server/util"}})<cr>
 nnoremap <leader>la <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
 nnoremap <leader>llo <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"logos/projects"}})<cr>
 nnoremap <leader>ltt <cmd>lua require("telescope.builtin").live_grep({["search_dirs"]={"ads/libs/py_mapreduce"}})<cr>
@@ -138,10 +141,12 @@ nnoremap <leader>dyt <cmd>lua require("telescope.builtin").grep_string({["search
 nnoremap <leader>dyq <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yql/library"}})<cr>
 nnoremap <leader>drec <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"library/python/reactor/client"}})<cr>
 nnoremap <leader>dt2 <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/utils/learn-tasks2"}})<cr>
+nnoremap <leader>dyb <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/server/proto", "yabs/server/libs", "yabs/server/util"}})<cr>
 nnoremap <leader>dl <cmd>lua require("telescope.builtin").grep_string(
   \ {["search_dirs"] = {
   \     "ads/libs", "ads/ml_engine", "junk/alb82", "logos/libs", "logos/projects/ads", "ads/daily_duty" 
   \ }})<cr>
+nnoremap <leader>db <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads/nirvana/blocks"}})<cr>
 nnoremap <leader>dem <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads/emily", "junk/alb82", "ads/libs"}})<cr>
 nnoremap <leader>dd <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"ads", "junk/alb82", "logos"}})<cr>
 nnoremap <leader>dfs <cmd>lua require("telescope.builtin").grep_string({["search_dirs"]={"yabs/models_services/feature_store", "yql/udfs/yabs/feature_store"}})<cr>
@@ -153,16 +158,25 @@ nnoremap <leader>fh <cmd>Telescope harpoon marks<cr>
 " nnoremap <leader>fhe <cmd>Telescope help_tags<cr>
 nnoremap <leader>fdir <cmd>Telescope file_browser<cr>
 nnoremap <leader>fdef <cmd>lua require("telescope.builtin").lsp_definitions()<cr>
+nnoremap <leader>K <cmd>lua vim.lsp.buf.hover()<cr>
+
 
 
 " lsp
 lua << EOF
+    -- Don't show the mode, since it's already in the status line
+    vim.opt.showmode = false
+
+    -- require'lspconfig'.jedi_language_server.setup{
+        -- initializationOptions = {
+            -- diagnostics = {enable = true}
+        -- }
+    -- }
     local custom_lsp_attach = function(client)
       -- See `:help nvim_buf_set_keymap()` for more information
       vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true})
       vim.api.nvim_buf_set_keymap(0, 'n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true})
       -- ... and other keymappings for LSP
-
       -- Use LSP as the handler for omnifunc.
       --    See `:help omnifunc` and `:help ins-completion` for more information.
       vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -189,9 +203,8 @@ lua << EOF
             allow_incremental_sync = false,
             debounce_text_changes = 500,
         },
+        -- root_dir = "/home/alb82/workspace/arc",
     }
-
-    require'lualine'.setup()
 
     require('telescope').setup{
       defaults = {
@@ -199,8 +212,14 @@ lua << EOF
           prompt_prefix = ' > ',
           color_devicons = true,
 
+          -- find ads/emily/storage -maxdepth 2 | xargs -n 1 -I {} bash -c "echo -n {}; echo -n ' '; find {} | wc -l" | nvim
           file_ignore_patterns = {
-              "^search/", "/cache", "ads/pytorch/packages",
+              "^search/", "/cache",
+              "ads/pytorch/packages", "/dmlc/",
+              "ads/quality",
+              "ads/yacontext/tasks", "ads/yacontext/apps",
+              "ads/emily/storage/models",
+              "ads/bsyeti/servants",
               "/canondata", "/factor_check",
               "logos/projects/ms",
               "node_modules", "difacto/sources", "static/dist",
@@ -319,11 +338,18 @@ lua << EOF
       contrast = "soft", -- can be "hard", "soft" or empty string
       palette_overrides = {},
       overrides = {},
-      dim_inactive = true,
+      dim_inactive = false,
       transparent_mode = false,
   })
+  require('kanagawa').setup({
+    transparent = false,         -- do not set background color
+    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+    theme = "wave",              -- Load "wave" theme when 'background' option is not set
+  })
   --vim.cmd("colorscheme gruvbox")
-  vim.cmd("colorscheme tokyonight")
+  --vim.cmd("colorscheme tokyonight")
+  --vim.cmd("colorscheme kanagawa-dragon")
+  vim.cmd("colorscheme kanagawa-wave")
 
   vim.filetype.add({
     filename = { ["ya.make"] = "yamake" }

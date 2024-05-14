@@ -123,7 +123,7 @@ function svns() {
 }
 alias nvim='/home/alb82/nvim_bin/nvim.appimage_0.9.5'
 alias nvimk='NVIM_APPNAME="nvimk" nvim'  # vanyl kickstart
-alias nvimvim='NVIM_APPNAME="nvimvim" nvim'
+alias nvimvim='NVIM_APPNAME="nvimvim" nvim'  # my old with init.vim and Plug
 alias late='. ~/.ssh/latestagent'
 alias ps_tree='ps -elFjH'
 

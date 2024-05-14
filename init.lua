@@ -939,6 +939,7 @@ require('lazy').setup({
   { 'nvim-lualine/lualine.nvim',
     -- wget --header 'Authorization: OAuth ..' https://paste.yandex-team.ru/d592e8dc-d3c9-42df-b1e5-d5059084f594/text
     -- patch -p1 < text
+    -- or ~/myvimrc/lualine_arc_patch
     opts = {
       sections = {
         lualine_b = {

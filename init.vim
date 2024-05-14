@@ -347,9 +347,9 @@ lua << EOF
     theme = "wave",              -- Load "wave" theme when 'background' option is not set
   })
   --vim.cmd("colorscheme gruvbox")
-  --vim.cmd("colorscheme tokyonight")
+  vim.cmd("colorscheme tokyonight")
   --vim.cmd("colorscheme kanagawa-dragon")
-  vim.cmd("colorscheme kanagawa-wave")
+  -- vim.cmd("colorscheme kanagawa-wave")
 
   vim.filetype.add({
     filename = { ["ya.make"] = "yamake" }

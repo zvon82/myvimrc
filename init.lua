@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -100,9 +100,7 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -152,7 +150,8 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 5
+vim.opt.colorcolumn = "80"
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -181,6 +180,12 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
+-- My:
+-- nnoremap <leader>h <cmd>let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
+vim.keymap.set('n', '<leader>h', '<cmd>let @/=\'\\V\\<\'.escape(expand(\'<cword>\'), \'\\\').\'\\>\'<cr>:set hls<cr>')
+vim.keymap.set('n', '<leader>e', '<cmd>close<cr>')
+vim.keymap.set('n', '<leader>s', '<cmd>update<cr>')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -203,6 +208,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+vim.filetype.add({ filename = {["ya.make"] = "yamake"} })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -359,6 +366,20 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+            -- find ads/emily/storage -maxdepth 2 | xargs -n 1 -I {} bash -c "echo -n {}; echo -n ' '; find {} | wc -l" | nvim
+            file_ignore_patterns = {
+                "^search/", "/cache/", "^cache/",
+                "ads/pytorch/packages", "/dmlc/",
+                "ads/quality",
+                "ads/yacontext/tasks", "ads/yacontext/apps",
+                "ads/emily/storage/models",
+                "ads/bsyeti/servants",
+                "/canondata", "/factor_check",
+                "logos/projects/ms",
+                "node_modules", "difacto/sources", "static/dist",
+            },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -372,16 +393,68 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+      vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+      -- vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[S]earch [F]iles' })
+      local _find_map = function(keys, dirs, desc)
+        vim.keymap.set('n', keys, function()
+            builtin.find_files({["search_dirs"] = dirs})
+          end,
+          { desc = desc })
+      end
+      local _live_map = function(keys, dirs, desc)
+        vim.keymap.set('n', keys, function()
+            builtin.live_grep({["search_dirs"] = dirs})
+          end,
+          { desc = desc })
+      end
+      local _grep_map = function(keys, dirs, desc)
+        vim.keymap.set('n', keys, function()
+            builtin.grep_string({["search_dirs"] = dirs})
+          end,
+          { desc = desc })
+      end
+
+      _find_map('<leader>ff', {
+          "ads", "junk/alb82", "logos", "yabs", "sandbox/projects",
+          "contrib/python", "yt/python/yt/wrapper", "yabs/models_services/feature_store",
+        }, "[F]ind [F]iles")
+      _find_map('<leader>fa', {
+          "ads", "junk/alb82", "logos",  "yabs/models_services/feature_store"
+        }, "[F]ind files in [A]ds")
+      _find_map('<leader>fla', {"logos/projects"}, "[F]ind files in [LA]ogos projects")
+      _find_map('<leader>fy', {
+        "yabs/server/proto", "yabs/server/libs", "yabs/server/util"},
+        '[F]ind files in [Y]abs')
+
+      _live_map('<leader>la', {"ads", "junk/alb82", "logos"}, "[L]ive grep [A]ds")
+      _live_map('<leader>llo', {"logos/projects"}, "[L]ive grep [LO]gos")
+      _live_map('<leader>ltt', {"ads/libs/py_mapreduce"}, "[L]ive grep [T]ab[T]ools")
+
+      _grep_map('<leader>dyt', {"yt/python/yt"}, "[D]efine grep [YT]")
+      _grep_map('<leader>dyq', {"yql/library"}, "[D]efine grep [YQ]l")
+      _grep_map('<leader>drec', {"library/python/reactor/client"}, "[D]efine grep [RE]a[C]tor")
+      _grep_map('<leader>dt2', {"yabs/utils/learn-tasks2"}, "[D]efine grep learn-[T]asks[2]")
+      _grep_map('<leader>dyb', {"yabs/server/proto", "yabs/server/libs", "yabs/server/util"}, "[D]efine grep [Y]a[B]s")
+      _grep_map('<leader>dl', {
+        "ads/libs", "ads/ml_engine", "junk/alb82", "logos/libs", "logos/projects/ads", "ads/daily_duty"},
+        "[D]efine grep [L]ibs"
+      )
+      _grep_map('<leader>db', {"ads/nirvana/blocks"}, "[D]efine grep [B]locks")
+      _grep_map('<leader>dem', {"ads/emily", "junk/alb82", "ads/libs"}, "[D]efine grep [EM]iliy")
+      _grep_map('<leader>dd', {"ads", "junk/alb82", "logos"}, "[D]efine grep [D]efine heavy")
+      _grep_map('<leader>dfs', {"yabs/models_services/feature_store", "yql/udfs/yabs/feature_store"},
+        "[D]efine grep [F]eature [S]tore")
+
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>rr', builtin.resume, { desc = '[S]earch [R]esume' })
+      vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+      vim.keymap.set('n', '<leader>:', function()
+        builtin.find_files({ cwd = vim.fn.expand("%:p:h") })
+      end, { desc = '[:] current folder: sf' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -405,6 +478,26 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+    end,
+  },
+
+  { "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local harpoon = require("harpoon")
+      harpoon:setup()
+
+      vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end, { desc = '[A]dd to harpoon' })
+      vim.keymap.set("n", "<leader>t", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = '[T]oggle quick menu' })
+      vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end, { desc = '[1] nav file' })
+      vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end, { desc = '[2] nav file' })
+      vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end, { desc = '[3] nav file' })
+      vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end, { desc = '[4] nav file' })
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+      -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
     end,
   },
 
@@ -592,6 +685,18 @@ require('lazy').setup({
             },
           },
         },
+
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  ignore = {'E501'} -- E501: line too long
+                }
+              }
+            }
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -625,46 +730,46 @@ require('lazy').setup({
     end,
   },
 
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    lazy = false,
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 500,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
-      },
-    },
-  },
+  -- { -- Autoformat
+  --   'stevearc/conform.nvim',
+  --   lazy = false,
+  --   keys = {
+  --     {
+  --       '<leader>f',
+  --       function()
+  --         require('conform').format { async = true, lsp_fallback = true }
+  --       end,
+  --       mode = '',
+  --       desc = '[F]ormat buffer',
+  --     },
+  --   },
+  --   opts = {
+  --     notify_on_error = false,
+  --     format_on_save = function(bufnr)
+  --       -- Disable "format_on_save lsp_fallback" for languages that don't
+  --       -- have a well standardized coding style. You can add additional
+  --       -- languages here or re-enable it for the disabled ones.
+  --       local disable_filetypes = { c = true, cpp = true }
+  --       return {
+  --         timeout_ms = 500,
+  --         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+  --       }
+  --     end,
+  --     formatters_by_ft = {
+  --       lua = { 'stylua' },
+  --       -- Conform can also run multiple formatters sequentially
+  --       -- python = { "isort", "black" },
+  --       --
+  --       -- You can use a sub-list to tell conform to run *until* a formatter
+  --       -- is found.
+  --       -- javascript = { { "prettierd", "prettier" } },
+  --     },
+  --   },
+  -- },
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
+    event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       {
@@ -697,6 +802,8 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
@@ -768,31 +875,96 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'buffer' },
         },
       }
+
+      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          {   name = 'buffer',
+              max_item_count = 20
+          },
+        }
+      })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            {
+              name = 'path',
+              max_item_count = 20
+            } },
+          { {
+            name = 'cmdline',
+            max_item_count = 20
+          }
+          })
+      })
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   init = function()
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-moon'
+  --
+  --     -- You can configure highlights by doing something like:
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
+  {
+    'rebelot/kanagawa.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      -- You can configure highlights by doing something like:
+      -- vim.cmd.colorscheme 'kanagawa-dragon'
+      vim.cmd.colorscheme 'kanagawa-wave'
       vim.cmd.hi 'Comment gui=none'
     end,
   },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+
+  { 'nvim-lualine/lualine.nvim',
+    -- wget --header 'Authorization: OAuth ..' https://paste.yandex-team.ru/d592e8dc-d3c9-42df-b1e5-d5059084f594/text
+    -- patch -p1 < text
+    opts = {
+      sections = {
+        lualine_b = {
+            {'diagnostics', sources={'nvim_lsp'}},
+            'diff',
+            'branch',
+        },
+        lualine_c = {{'filename', path=1}},
+      },
+      inactive_sections = {
+        lualine_c = {{'filename', path=1}},
+      },
+    },
+  },
+
+  { 'ggandor/leap.nvim',
+    config = function()
+      require("leap").create_default_mappings()
+    end,
+  },
+
+  { 'kylechui/nvim-surround', opts= {} },
+
+  'sotte/presenting.vim',
+
+  { 'norcalli/nvim-terminal.lua', opts= {} },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -810,22 +982,22 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- require('mini.surround').setup()
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      -- -- Simple and easy statusline.
+      -- --  You could remove this setup call if you don't like it,
+      -- --  and try some other statusline plugin
+      -- local statusline = require 'mini.statusline'
+      -- -- set use_icons to true if you have a Nerd Font
+      -- statusline.setup { use_icons = vim.g.have_nerd_font }
+      --
+      -- -- You can configure sections in the statusline by overriding their
+      -- -- default behavior. For example, here we set the section for
+      -- -- cursor location to LINE:COLUMN
+      -- ---@diagnostic disable-next-line: duplicate-set-field
+      -- statusline.section_location = function()
+      --   return '%2l:%-2v'
+      -- end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim

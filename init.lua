@@ -7,7 +7,7 @@
 ========         .----------------------.   | === |          ========
 ========         |.-""""""""""""""""""-.|   |-----|          ========
 ========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
+========         ||      MY.NVIM       ||   |-----|          ========
 ========         ||                    ||   | === |          ========
 ========         ||                    ||   |-----|          ========
 ========         ||:Tutor              ||   |:::::|          ========
@@ -136,6 +136,11 @@ vim.opt.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+-- my tabs from init.vim:
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -417,7 +422,7 @@ require('lazy').setup({
 
       _find_map('<leader>ff', {
           "ads", "junk/alb82", "logos", "yabs", "sandbox/projects",
-          "contrib/python", "yt/python/yt/wrapper", "yabs/models_services/feature_store",
+          "contrib/python", "yt/python/yt/wrapper",
         }, "[F]ind [F]iles")
       _find_map('<leader>fa', {
           "ads", "junk/alb82", "logos",  "yabs/models_services/feature_store"
@@ -498,6 +503,25 @@ require('lazy').setup({
       -- Toggle previous & next buffers stored within Harpoon list
       -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
       -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+    end,
+  },
+
+  { 'nvim-orgmode/orgmode',
+    event = 'VeryLazy',
+    ft = { 'org' },
+    config = function()
+      -- Setup orgmode
+      require('orgmode').setup({
+        org_agenda_files = '~/orgfiles/**/*',
+        org_default_notes_file = '~/orgfiles/refile.org',
+      })
+
+      -- NOTE: If you are using nvim-treesitter with `ensure_installed = "all"` option
+      -- add `org` to ignore_install
+      -- require('nvim-treesitter.configs').setup({
+      --   ensure_installed = 'all',
+      --   ignore_install = { 'org' },
+      -- })
     end,
   },
 
@@ -927,6 +951,7 @@ require('lazy').setup({
     'rebelot/kanagawa.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
+      -- vim.cmd.colorscheme 'kanagawa-lotus'
       -- vim.cmd.colorscheme 'kanagawa-dragon'
       vim.cmd.colorscheme 'kanagawa-wave'
       vim.cmd.hi 'Comment gui=none'
@@ -939,7 +964,7 @@ require('lazy').setup({
   { 'nvim-lualine/lualine.nvim',
     -- wget --header 'Authorization: OAuth ..' https://paste.yandex-team.ru/d592e8dc-d3c9-42df-b1e5-d5059084f594/text
     -- patch -p1 < text
-    -- or ~/myvimrc/lualine_arc_patch
+    -- OR: ~/myvimrc/lualine_arc_patch
     opts = {
       sections = {
         lualine_b = {
